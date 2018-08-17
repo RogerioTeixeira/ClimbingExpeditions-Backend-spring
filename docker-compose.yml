@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  postgres:
+    hostname: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: xrte1982
+      PGADMIN_DEFAULT_EMAIL: rogerio.teixeira@hotmail.it
+      PGADMIN_DEFAULT_PASSWORD: xrte1982
+    volumes:
+       - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  
+  pgadmin:
+    links:
+      - postgres:postgres
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: rogerio.teixeira@hotmail.it
+      PGADMIN_DEFAULT_PASSWORD: xrte1982
+    volumes:
+       - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "80:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+volumes:
+  pgadmin-data:
+    driver: local
+  postgres-data:
+    driver: local

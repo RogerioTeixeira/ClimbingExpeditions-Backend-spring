@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.climb.domain.User;
 import com.climb.repository.UserRepository;
@@ -22,22 +24,17 @@ public class UserController {
         this.userRepository = userRepository;
 }
 	
-	@CrossOrigin
+	/*@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<User> getUser() {
-		User user = new User("1234", "Rogerio", "Rogerio.teixeira@hotmail.it");
-		this.userRepository.save(user);
-		return new ResponseEntity<>(new User("1234", "Rogerio", "Rogerio.teixeira@hotmail.it"), HttpStatus.OK);
+		return new ResponseEntity<>(new User("1234", "Rogerio.teixeira@hotmail.it"), HttpStatus.OK);
 
-	}
+	}*/
 	
 	@CrossOrigin
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ResponseEntity<ArrayList<User>> getUserList() {
-		ArrayList<User> list = new ArrayList<>();
-		list.add(new User("1234", "Rogerio", "Rogerio.teixeira@hotmail.it"));
-		list.add(new User("7448", "Mario", "Mario.teixeira@hotmail.it"));
-		return new ResponseEntity<>(list , HttpStatus.OK);
+	public Page<User> getUserList(Pageable pageable) {
+		return this.userRepository.findAll(pageable);
 
 	}
 }

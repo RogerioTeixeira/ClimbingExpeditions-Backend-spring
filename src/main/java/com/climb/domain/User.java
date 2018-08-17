@@ -1,42 +1,39 @@
 package com.climb.domain;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
+import javax.persistence.Id;
 
-@Document
+
+@Entity
+@Table(name = "users")
 public class User {
 	@Id
-	private String id;
-
-	private String name;
+	private int id;
+	
+	private String uid;
     
-	@Indexed(unique=true)
-	private String email;
-	
-	
-
-	public User(String id, String name, String email) {
-		this.id = id;
-		this.name = name;
-		this.email = email;
-	}
-
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+
+	public String getUid() {
+		return uid;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
+
+	private String email;
+	
+
 
 	public String getEmail() {
 		return email;
