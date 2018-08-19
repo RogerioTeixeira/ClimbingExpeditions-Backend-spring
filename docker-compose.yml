@@ -27,7 +27,7 @@ services:
     volumes:
        - pgadmin-data:/var/lib/pgadmin
     ports:
-      - "80:80"
+      - "5020:80"
     networks:
       - postgres
     restart: unless-stopped
