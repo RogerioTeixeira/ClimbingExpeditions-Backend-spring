@@ -1,1 +1,0 @@
-docker exec climbingexpeditions_postgres_1 pg_dump -U postgres -Fp -c -s climb > backup.sql
