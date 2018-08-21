@@ -1,10 +1,5 @@
 package com.climb.api;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,15 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.PagedResources.PageMetadata;
 
-import com.climb.assembler.UserAssembler;
+
 import com.climb.domain.User;
-import com.climb.domain.UserResource;
-import com.climb.exception.ResourceNotFoundException;
-import com.climb.repository.UserRepository;
+
 import com.climb.service.UserService;
 
 @RestController
@@ -32,14 +22,7 @@ import com.climb.service.UserService;
 public class UserController {
 	@Autowired
     private UserService userService;
-	
-	@Autowired
-	private UserAssembler userAssemble;
-	
-	@Autowired
-	PagedResourcesAssembler<User> pageAssembler;
-	
-	
+		
 	public UserController() {
         
 }

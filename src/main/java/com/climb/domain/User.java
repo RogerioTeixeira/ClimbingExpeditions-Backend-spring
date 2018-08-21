@@ -11,19 +11,17 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "users")
+@SequenceGenerator(
+        name = AbstractEntity.GENERATOR,
+        sequenceName = "seq_users",
+        allocationSize=1,
+        initialValue = 1
+)
 @Getter @Setter @NoArgsConstructor
-public class User extends AuditModel {
-	@Id
-	@GeneratedValue(generator = "user_generator")
-	@SequenceGenerator(
-            name = "user_generator",
-            sequenceName = "seq_users",
-            allocationSize=1,
-            initialValue = 1
-    )
-	@Column(name = "id")
-	private int id;
+public class User extends AbstractEntity {
 	
+	private static final long serialVersionUID = -5787038919803479057L;
+
     private String uid;
     
 	private String email;

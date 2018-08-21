@@ -1,14 +1,11 @@
 package com.climb.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.climb.domain.User;
-import com.climb.exception.ResourceNotFoundException;
 import com.climb.exception.UserAlreadyExistsException;
 import com.climb.repository.UserRepository;
 
