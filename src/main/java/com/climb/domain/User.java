@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ import lombok.Setter;
         allocationSize=1,
         initialValue = 1
 )
-@Getter @Setter @NoArgsConstructor
+@Data
 public class User extends AbstractEntity {
 	
 	private static final long serialVersionUID = -5787038919803479057L;
