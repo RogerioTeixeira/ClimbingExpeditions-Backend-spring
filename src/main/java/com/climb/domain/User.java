@@ -1,24 +1,32 @@
 package com.climb.domain;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 @SequenceGenerator(
         name = AbstractEntity.GENERATOR,
         sequenceName = "seq_users",
         allocationSize=1,
         initialValue = 1
 )
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class User extends AbstractEntity {
 	
 	private static final long serialVersionUID = -5787038919803479057L;
@@ -27,9 +35,14 @@ public class User extends AbstractEntity {
     
 	private String email;
 	
-    @Column(name = "logged_at", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date loggedAt = new Date();
+	private String name;
+	
+	@ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+	@JoinTable(name = "user_role",
+            joinColumns = { @JoinColumn(name = "id_user") },
+            inverseJoinColumns = { @JoinColumn(name = "id_role") })
+	Set<Role> roles = new HashSet<>();
 	
 	
 	public User(String uid, String email) {

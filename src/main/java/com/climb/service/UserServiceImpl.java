@@ -5,8 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.climb.domain.Role;
 import com.climb.domain.User;
 import com.climb.exception.UserAlreadyExistsException;
+import com.climb.repository.RoleRepository;
 import com.climb.repository.UserRepository;
 
 @Service
@@ -14,6 +16,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
     private UserRepository userRepository;
 	
+	@Autowired
+    private RoleRepository roleRepository;
 	
 	@Override
 	public User getUserById(int id) {
@@ -22,12 +26,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User createUser(User user) {
+	public User createUser(User user , String roleName) {
 		// TODO Auto-generated method stub
 		if(this.isExistUser(user)) {
 			throw new UserAlreadyExistsException();
 		}
-		return this.userRepository.save(user);
+		
+		Role role = this.roleRepository.findByRole(roleName);
+		
+		User newUser = new User();
+		newUser.getRoles().add(role);
+		newUser.setEmail(user.getEmail());
+		newUser.setUid(user.getUid());
+		newUser.setName(user.getName());
+		return this.userRepository.save(newUser);
 	}
 
 	@Override

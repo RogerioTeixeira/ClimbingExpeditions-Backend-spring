@@ -8,20 +8,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import java.lang.reflect.Type;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-
+import com.climb.domain.Role;
+import com.climb.domain.RoleDTO;
 import com.climb.domain.User;
-
+import com.climb.domain.UserDTO;
 import com.climb.service.UserService;
+import com.google.common.reflect.TypeToken;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
     private UserService userService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 		
 	public UserController() {
         
@@ -36,9 +45,12 @@ public class UserController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/{id}" , method = RequestMethod.GET)
-	public ResponseEntity<User> getUserById(@PathVariable(value = "id") int id) {
+	public ResponseEntity<UserDTO> getUserById(@PathVariable(value = "id") int id) {
 		User user = this.userService.getUserById(id);
-		return new  ResponseEntity<User>(user, HttpStatus.OK);
+		UserDTO userDto = modelMapper.map(user, UserDTO.class);
+		Set<String> role = user.getRoles().stream().map(a -> a.getRole()).collect(Collectors.toSet());
+		userDto.setRole(role);
+		return new  ResponseEntity<UserDTO>(userDto, HttpStatus.OK);
 
 	}
 	
@@ -55,7 +67,7 @@ public class UserController {
 	@CrossOrigin
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<User> createUser(@RequestBody User user) {  
-		return new  ResponseEntity<User>(this.userService.createUser(user), HttpStatus.OK);
+		return new  ResponseEntity<User>(this.userService.createUser(user, "USER"), HttpStatus.OK);
 
 	}
 }

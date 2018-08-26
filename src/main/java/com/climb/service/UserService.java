@@ -8,7 +8,7 @@ import com.climb.domain.User;
 public interface UserService {
 	User getUserById(int id);
 
-    User createUser(User user);
+    User createUser(User user , String role);
 
     User updateUser(User user);
     
